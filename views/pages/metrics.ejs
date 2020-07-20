@@ -11,7 +11,7 @@
             <ol class="breadcrumb bg-light text-dark">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                   Metrics
+                    Metrics
                 </li>
             </ol>
         </div>
@@ -65,8 +65,6 @@
             <%= list_tag_freq %>
         </span>
     </div>
-
-
     <script>
         function getData(id) {
             const meta = document.getElementById(id).textContent;
@@ -194,17 +192,17 @@
                         for (var i = 0; i < dataset.data.length; i++) {
                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
                                 total = dataset._meta[Object.keys(dataset._meta)[0]].total,
-                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
                                 start_angle = model.startAngle,
                                 end_angle = model.endAngle,
-                                mid_angle = start_angle + (end_angle - start_angle)/2;
+                                mid_angle = start_angle + (end_angle - start_angle) / 2;
 
                             var x = mid_radius * Math.cos(mid_angle);
                             var y = mid_radius * Math.sin(mid_angle);
 
                             ctx.fillStyle = '#444';
 
-                            var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                            var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
                             ctx.fillText(dataset.data[i], model.x + x, model.y + y);
                             // Display percent in another line, line break doesn't work for fillText
                             ctx.fillText(percent, model.x + x, model.y + y + 15);

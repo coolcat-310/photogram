@@ -81,7 +81,6 @@
 
             <div class="col text-left">
                <span>
-
                    (<%= profile.phone.slice(0, 3) %>) <%= profile.phone.slice(3, 6) %> - <%= profile.phone.slice(-4) %>
                </span>
             </div>
@@ -96,12 +95,12 @@
 
             <div class="col text-left">
                <span>
-                    <%= (profile.created_at.getMonth()+1) + '/' + profile.created_at.getDate() + '/' +  profile.created_at.getFullYear()%>
+                    <%= (profile.created_at.getMonth() + 1) + '/' + profile.created_at.getDate() + '/' + profile.created_at.getFullYear() %>
                </span>
             </div>
         </div>
         <hr class="new1">
-        <div class="row"  style="padding-bottom: 0.25rem">
+        <div class="row" style="padding-bottom: 0.25rem">
             <div class="col-md-3"></div>
             <div class="col">
                 <h4 class="text-center">
@@ -110,7 +109,7 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row"  style="padding-bottom: 0.25rem">
+        <div class="row" style="padding-bottom: 0.25rem">
             <div class="col-2"></div>
             <div class="col-4 text-right nopadding">
                 <span>
@@ -120,12 +119,12 @@
 
             <div class="col-1 text-left">
                <span>
-                    <% const child = profile.set_child_friendly === 1 ? 'True' : 'False'%>
+                   <% const child = profile.set_child_friendly === 1 ? 'True' : 'False' %>
                    <%= child %>
                </span>
             </div>
         </div>
-        <div class="row"  style="padding-bottom: 0.25rem">
+        <div class="row" style="padding-bottom: 0.25rem">
             <div class="col-2"></div>
             <div class="col-4 text-right nopadding">
                 <span>
@@ -135,14 +134,12 @@
 
             <div class="col-1 text-left">
                <span>
-                   <% const status = profile.disable_account == 1 ? 'Disabled' : 'Active'%>
+                   <% const status = profile.disable_account == 1 ? 'Disabled' : 'Active' %>
                    <%= status %>
                </span>
             </div>
         </div>
     </div>
-
-
 </main>
 
 <footer>

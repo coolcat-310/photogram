@@ -11,6 +11,27 @@
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
             </ol>
         </div>
+        <a href="/adjudicate/comment" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Adjudicate Comment</button>
+        </a>
+        <a href="/adjudicate/photo" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Adjudicate Photo</button>
+        </a>
+        <a href="/advertisers" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Advertisers</button>
+        </a>
+        <a href="/create/profile" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Create User</button>
+        </a>
+        <a href="/metrics" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Metrics</button>
+        </a>
+        <a href="/photos" style="margin-right: .5rem;">
+            <button type="button" class="btn btn-link">Photos</button>
+        </a>
+        <a href="/profiles">
+            <button type="button" class="btn btn-link">Profiles</button>
+        </a>
     </nav>
 </header>
 <main>
@@ -18,14 +39,14 @@
         <h1 class="display-3">PhotoGram</h1>
     </div>
     <% result.forEach(el => {
-        let time =  new Date(el.created_At);
+        let time = new Date(el.created_At);
         let now = Date.now();
         var Difference_In_Days = Math.floor((now - time) / (1000 * 3600 * 24));
     %>
     <div class="container feed">
         <div class="row" style="padding-top: 1rem;">
             <div class="col-2">
-                <a href="/profile/<%= el.ID%>">
+                <a href="/profile/<%= el.ID %>">
                     <img class="rounded-circle z-depth-2"
                          alt="30x30" src="<%= el.profile_url %>"
                          data-holder-rendered="true" style="max-width: 50px; padding-top: 1rem;">
@@ -73,54 +94,6 @@
         </div>
     </div>
     <% }) %>
-
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-4 nopadding">-->
-<!--                <img class="rounded" src="https://i.picsum.photos/id/328/200/300.jpg?hmac=rUU8GIGsrhqhqkiTi6qIQXtGstAUmnv4yV1bc_Sns7w"-->
-<!--                     alt="photo" >-->
-<!--            </div>-->
-<!--            <div class="col-lg-8 nopadding">-->
-<!--               <div class="row" style="margin-top: 2rem">-->
-<!--                   USERNAME-->
-<!--               </div>-->
-<!--                <div class="row" style="margin-top: 1rem; padding-right: 7rem">-->
-<!--                    The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”,-->
-<!--                    looks like Latin because in its youth, centuries ago, it was Latin.-->
-<!--                </div>-->
-<!--                <div class="row" style="margin-top: 5rem;">-->
-<!--                    <div class="col-lg-2 text-left">-->
-<!--                        <p>-->
-<!--                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>-->
-<!--                           4-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-7"></div>-->
-<!--                    <div class="col-lg-3 text-left">-->
-<!--                        <p>-->
-<!--                            5/23/07-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
-
-<!--    <div class="container">-->
-<!--        <h1>JOIN US</h1>-->
-<!--        <p class="lead">Enter your email to join <strong></strong>-->
-<!--            others on our waitlist. We are 100% not a cult </p>-->
-
-
-<!--        <form method="POST" action="/register">-->
-<!--            <label>-->
-<!--                <input type="text" class="form" placeholder="Enter Your Email" name="email">-->
-<!--            </label>-->
-<!--            <button class=" btn btn-primary">Join Now</button>-->
-<!--        </form>-->
-<!--    </div>-->
 </main>
 <footer>
     <% include ../partials/footer %>

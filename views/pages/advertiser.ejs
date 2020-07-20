@@ -17,119 +17,119 @@
         </div>
     </nav>
 </header>
-    <main>
-        <div class="jumbotron bg-light text-dark">
-            <h1 class="display-3">Advertiser</h1>
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Advertiser</h1>
 
-            <p class="lead">There are a total of <strong><%=campaign.length%></strong>
-                campaings.</p>
+        <p class="lead">There are a total of <strong><%= campaign.length %></strong>
+            campaings.</p>
+    </div>
+    <div class="container feed">
+        <div class="row " style="text-align: center; display: block;">
+            <img class="rounded-circle z-depth-2"
+                 alt="300x300" src="<%= advertiser.image_url %>"
+                 data-holder-rendered="true" style="max-width: 400px; padding-top: 1rem;">
+
         </div>
-        <div class="container feed">
-            <div class="row " style="text-align: center; display: block;">
-                <img class="rounded-circle z-depth-2"
-                     alt="300x300" src="<%= advertiser.image_url %>"
-                     data-holder-rendered="true" style="max-width: 400px; padding-top: 1rem;">
-
+        <div class="row" style="padding-top: 1rem;">
+            <div class="col-md-3"></div>
+            <div class="col">
+                <h4 class="text-center">
+                    <%= advertiser.advertiser_name %>
+                </h4>
             </div>
-            <div class="row" style="padding-top: 1rem;">
-                <div class="col-md-3"></div>
-                <div class="col">
-                    <h4 class="text-center">
-                        <%= advertiser.advertiser_name %>
-                    </h4>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-            <div class="row" style="padding-top: 0.5rem;padding-bottom: 0.25rem;">
-                <div class="col-3"></div>
-                <div class="col-2 text-right">
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row" style="padding-top: 0.5rem;padding-bottom: 0.25rem;">
+            <div class="col-3"></div>
+            <div class="col-2 text-right">
                 <span>
                     Email:
                 </span>
-                </div>
+            </div>
 
-                <div class="col text-left">
+            <div class="col text-left">
                <span>
                    <%= advertiser.email %>
                </span>
-                </div>
             </div>
+        </div>
+        <div class="row" style="padding-bottom: 0.25rem">
+            <div class="col-3"></div>
+            <div class="col-2 text-right">
+                    <span>
+                        Phone:
+                    </span>
+            </div>
+
+            <div class="col text-left">
+                   <span>
+                       (<%= advertiser.phone.slice(0, 3) %>) <%= advertiser.phone.slice(3, 6) %> - <%= advertiser.phone.slice(-4) %>
+                   </span>
+            </div>
+        </div>
+        <hr class="new1">
+        <div class="row" style="padding-bottom: 0.25rem">
+            <div class="col-md-3"></div>
+            <div class="col">
+                <h4 class="text-center">
+                    Campaings
+                </h4>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <% campaign.forEach(el => { %>
             <div class="row" style="padding-bottom: 0.25rem">
                 <div class="col-3"></div>
                 <div class="col-2 text-right">
                     <span>
-                        Phone:
+                        Hastag:
                     </span>
                 </div>
 
                 <div class="col text-left">
-                   <span>
-                       (<%= advertiser.phone.slice(0, 3) %>) <%= advertiser.phone.slice(3, 6) %> - <%= advertiser.phone.slice(-4) %>
-                   </span>
-                </div>
-            </div>
-            <hr class="new1">
-            <div class="row"  style="padding-bottom: 0.25rem">
-                <div class="col-md-3"></div>
-                <div class="col">
-                    <h4 class="text-center">
-                        Campaings
-                    </h4>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-            <% campaign.forEach(el => { %>
-                <div class="row" style="padding-bottom: 0.25rem">
-                    <div class="col-3"></div>
-                    <div class="col-2 text-right">
-                    <span>
-                        Hastag:
-                    </span>
-                    </div>
-
-                    <div class="col text-left">
                        <span>
                             #<%= el.tag_name %>
                        </span>
-                    </div>
                 </div>
-                <div class="row" style="padding-bottom: 0.25rem">
-                    <div class="col-2"></div>
-                    <div class="col-3 text-right">
+            </div>
+            <div class="row" style="padding-bottom: 0.25rem">
+                <div class="col-2"></div>
+                <div class="col-3 text-right">
                         <span>
                             Start Date:
                         </span>
-                    </div>
-
-                    <div class="col text-left">
-                       <span>
-                            <%= (el.start_date.getMonth()+1) + '/' + el.start_date.getDate() + '/' +  el.start_date.getFullYear()%>
-                       </span>
-                    </div>
                 </div>
-                <div class="row" style="padding-bottom: 0.25rem">
-                    <div class="col-2"></div>
-                    <div class="col-3 text-right">
+
+                <div class="col text-left">
+                       <span>
+                            <%= (el.start_date.getMonth() + 1) + '/' + el.start_date.getDate() + '/' + el.start_date.getFullYear() %>
+                       </span>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 0.25rem">
+                <div class="col-2"></div>
+                <div class="col-3 text-right">
                         <span>
                             End Date:
                         </span>
-                    </div>
-
-                    <div class="col text-left">
-                       <span>
-                            <%= (el.end_date.getMonth()+1) + '/' + el.end_date.getDate() + '/' +  el.end_date.getFullYear()%>
-                       </span>
-                    </div>
                 </div>
-            <% }) %>
-            <p style="text-align: center">
-                <% const text = campaign.length === 0 ? 'No campaigns at this time': '' %>
-                <%= text %>
-            </p>
-        </div>
-    </main>
-    <footer>
-        <% include ../partials/footer %>
-    </footer>
+
+                <div class="col text-left">
+                       <span>
+                            <%= (el.end_date.getMonth() + 1) + '/' + el.end_date.getDate() + '/' + el.end_date.getFullYear() %>
+                       </span>
+                </div>
+            </div>
+        <% }) %>
+        <p style="text-align: center">
+            <% const text = campaign.length === 0 ? 'No campaigns at this time' : '' %>
+            <%= text %>
+        </p>
+    </div>
+</main>
+<footer>
+    <% include ../partials/footer %>
+</footer>
 </body>
 </html>

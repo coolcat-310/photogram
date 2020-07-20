@@ -22,12 +22,12 @@
     <div class="jumbotron bg-light text-dark">
         <h1 class="display-3">Photos</h1>
 
-        <p class="lead">There are a total of <strong><%=results.length%></strong>
+        <p class="lead">There are a total of <strong><%= results.length %></strong>
             photos in the application.</p>
     </div>
     <div class="container">
         <div class="row">
-            <% for(var i=0; i<results.length; i++) { %>
+            <% for(var i = 0; i < results.length; i++) { %>
                 <div class="col-sm-4">
                     <div class="card mb-3">
                         <img class="card-img-top img-fluid" src=" <%= results[i].image_url %> " alt="Card image cap">
@@ -39,19 +39,21 @@
                                 <%= results[i].caption %>
                             </p>
                             <p class="card-text">
-                                <a type="button" class="btn btn-outline-dark" href="/photo/<%= results[i].id%>">More Info</a>
+                                <a type="button" class="btn btn-outline-dark" href="/photo/<%= results[i].id %>">More
+                                    Info</a>
                                 <button type="button" class="btn btn-outline-warning  pop-modal"
-                                        data-toggle="modal" data-target="#exampleModal" id="<%= results[i].comment_id%>"
-                                        onclick="reply_click(<%= results[i].id%>)">
+                                        data-toggle="modal" data-target="#exampleModal"
+                                        id="<%= results[i].comment_id %>"
+                                        onclick="reply_click(<%= results[i].id %>)">
                                     Report <i class="fa fa-flag" aria-hidden="true"></i>
                                 </button>
                             </p>
-
-
-                            <p class="card-text"><small class="text-muted">
+                            <p class="card-text">
+                                <small class="text-muted">
                                     Created at:
-                                    <%= results[i].created_at%>
-                                </small></p>
+                                    <%= results[i].created_at %>
+                                </small>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,8 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -73,19 +76,22 @@
                     <form method="POST" action="/report-photo">
                         <p><strong>Please select an option for reporting</strong></p>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1" value="SEXUAL">
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1"
+                                   value="SEXUAL">
                             <label class="form-check-label" for="exampleRadios1">
                                 Sexual conduct and not appropriate.
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2" value="RUDE">
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2"
+                                   value="RUDE">
                             <label class="form-check-label" for="exampleRadios2">
                                 Unacceptable bullying behavior.
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios3" value="OTHER">
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios3"
+                                   value="OTHER">
                             <label class="form-check-label" for="exampleRadios2">
                                 Other reason, needs investigation.
                             </label>
@@ -107,13 +113,12 @@
     $('#exmpleModal').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })
+
     function reply_click(clicked_id) {
 
         let val1 = $("#exampleRadios1").val();
         let val2 = $("#exampleRadios2").val();
         let val3 = $("#exampleRadios3").val();
-
-        console.log(clicked_id);
 
         $("#exampleRadios1").val(`${val1}-${clicked_id}`);
         $("#exampleRadios2").val(`${val2}-${clicked_id}`);

@@ -34,9 +34,6 @@
                 here.
             </a>
         </p>
-
-
-
     </div>
     <div class="container">
         <table class="table" style="padding-bottom: 1rem;">
@@ -50,40 +47,41 @@
             </tr>
             </thead>
             <tbody>
-            <% results.forEach(el => {%>
-            <tr>
-                <th scope="row">
-                    <%= el.reason %>
-                </th>
-                <td>
-                    <%= el.comment_text %>
-                </td>
-                <td>
-                    <%= el.username %>
-                </td>
-                <td>
-                    <%= (el.ac_created_at.getMonth()+1) + '/' + el.ac_created_at.getDate() + '/' +  el.ac_created_at.getFullYear()%>
-                </td>
-                <td>
-                    <form method="POST" action="/ad">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1" value="reject-ac/<%=el.ac_id%>">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Reject
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <% const value=`delete-cm/${el.comment_id}-ac/${el.ac_id}`%>
-                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2" value="<%=value %>">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Delete
-                            </label>
-                        </div>
-                        <button class="btn btn-outline-danger">Submit Action</button>
-                    </form>
-
-                </td>
-            </tr>
+            <% results.forEach(el => { %>
+                <tr>
+                    <th scope="row">
+                        <%= el.reason %>
+                    </th>
+                    <td>
+                        <%= el.comment_text %>
+                    </td>
+                    <td>
+                        <%= el.username %>
+                    </td>
+                    <td>
+                        <%= (el.ac_created_at.getMonth() + 1) + '/' + el.ac_created_at.getDate() + '/' + el.ac_created_at.getFullYear() %>
+                    </td>
+                    <td>
+                        <form method="POST" action="/ad">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1"
+                                       value="reject-ac/<%= el.ac_id %>">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Reject
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <% const value = `delete-cm/${el.comment_id}-ac/${el.ac_id}` %>
+                                <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2"
+                                       value="<%= value %>">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Delete
+                                </label>
+                            </div>
+                            <button class="btn btn-outline-danger">Submit Action</button>
+                        </form>
+                    </td>
+                </tr>
             <% }) %>
             </tbody>
         </table>
