@@ -1,0 +1,46 @@
+body {
+    /*color: purple;*/
+}
+
+.card-text {
+    padding: 1rem;
+}
+
+.card-title {
+    padding-left: 1rem;
+}
+
+.container {
+    border-radius: 5px;
+    box-shadow: 2px 2px 44px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.feed {
+    max-width: 475px;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+hr.new1 {
+    border-top: 1px solid lightblue;
+}
+
+canvas {
+    padding: 1rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

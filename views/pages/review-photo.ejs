@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-light text-dark">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    adjudicate-photo
+                </li>
+            </ol>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Adjudicate Comment</h1>
+
+        <p class="lead">
+            There are a total of
+            <strong>
+               <%= results.length %>
+            </strong>
+            cases that need adjudicating.
+        </p>
+        <p>
+            To adjudicate comments click
+            <a href="/adjudicate/comment">
+                here.
+            </a>
+        </p>
+
+
+
+    </div>
+    <div class="container">
+        <table class="table" style="padding-bottom: 1rem;">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Reason for Adjudication</th>
+                <th scope="col">Caption</th>
+                <th scope="col">Image</th>
+                <th scope="col">Username</th>
+                <th scope="col">Flagged raised at</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% results.forEach(el=> {%>
+                <tr>
+                <th>
+                    <%= el.reason %>
+                </th>
+                <th>
+                    <%= el.photo_caption %>
+                </th>
+                <th>
+                    <img src="<%= el.photo_url %>" alt="adj-photo" class="img-thumbnail" style="max-height: 150px">
+                </th>
+                <th>
+                    <%= el.username %>
+                </th>
+                <th>
+                    <%= (el.ap_created_at.getMonth()+1) + '/' + el.ap_created_at.getDate() + '/' +  el.ap_created_at.getFullYear()%>
+                </th>
+                <th>
+                    <form method="POST" action="/ad2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1" value="reject-ap/<%=el.ap_id%>">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Reject
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <% const value=`delete-ph/${el.photo_id}-ap/${el.ap_id}`%>
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2" value="<%=value %>">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Delete
+                            </label>
+                        </div>
+                        <button class="btn btn-outline-danger">Submit Action</button>
+                    </form>
+                </th>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <% include ../partials/footer %>
+</footer>
+</body>
+</html>

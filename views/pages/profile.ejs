@@ -1,0 +1,153 @@
+<!-- views/pages/users.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-light text-dark">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/profiles">Profiles</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= profile.user_id %>
+                </li>
+            </ol>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Profile</h1>
+
+        <p class="lead">
+            <%= profile.username %> has
+            <strong>
+                <%= profile.followers %>
+            </strong>
+            followers.
+        </p>
+        <p>
+            To edit click
+            <a href="/edit/<%= profile.user_id %>">
+                here
+            </a>
+        </p>
+    </div>
+    <div class="container feed">
+
+
+        <div class="row " style="text-align: center; display: block;">
+            <img class="rounded-circle z-depth-2"
+                 alt="300x300" src="<%= profile.image_url %>"
+                 data-holder-rendered="true" style="max-width: 400px; padding-top: 1rem;">
+
+        </div>
+        <div class="row" style="padding-top: 1rem;">
+            <div class="col-md-3"></div>
+            <div class="col">
+                <h4 class="text-center">
+                    <%= profile.username %>
+                </h4>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row" style="padding-top: 0.5rem;padding-bottom: 0.25rem;">
+            <div class="col-3"></div>
+            <div class="col-2 text-right">
+                <span>
+                    Email:
+                </span>
+            </div>
+
+            <div class="col text-left">
+               <span>
+                   <%= profile.email %>
+               </span>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 0.25rem">
+            <div class="col-3"></div>
+            <div class="col-2 text-right">
+                <span>
+                    Phone:
+                </span>
+            </div>
+
+            <div class="col text-left">
+               <span>
+
+                   (<%= profile.phone.slice(0, 3) %>) <%= profile.phone.slice(3, 6) %> - <%= profile.phone.slice(-4) %>
+               </span>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 0.25rem">
+            <div class="col-3"></div>
+            <div class="col-2 text-right">
+                <span>
+                    Created:
+                </span>
+            </div>
+
+            <div class="col text-left">
+               <span>
+                    <%= (profile.created_at.getMonth()+1) + '/' + profile.created_at.getDate() + '/' +  profile.created_at.getFullYear()%>
+               </span>
+            </div>
+        </div>
+        <hr class="new1">
+        <div class="row"  style="padding-bottom: 0.25rem">
+            <div class="col-md-3"></div>
+            <div class="col">
+                <h4 class="text-center">
+                    User Settings
+                </h4>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row"  style="padding-bottom: 0.25rem">
+            <div class="col-2"></div>
+            <div class="col-4 text-right nopadding">
+                <span>
+                    Underage Account:
+                </span>
+            </div>
+
+            <div class="col-1 text-left">
+               <span>
+                    <% const child = profile.set_child_friendly === 1 ? 'True' : 'False'%>
+                   <%= child %>
+               </span>
+            </div>
+        </div>
+        <div class="row"  style="padding-bottom: 0.25rem">
+            <div class="col-2"></div>
+            <div class="col-4 text-right nopadding">
+                <span>
+                    Account Status:
+                </span>
+            </div>
+
+            <div class="col-1 text-left">
+               <span>
+                   <% const status = profile.disable_account == 1 ? 'Disabled' : 'Active'%>
+                   <%= status %>
+               </span>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

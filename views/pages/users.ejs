@@ -1,0 +1,48 @@
+<!-- views/pages/users.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Users</h1>
+
+        <p class="lead">There are a total of <strong><%=results.length%></strong>
+            users in the application.</p>
+        <p class="lead">Get to know about them by clicking on their profile.</p>
+    </div>
+    <div class="container">
+        <div class="card-columns">
+        <% for(var i=0; i<results.length; i++) { %>
+        <div class="card p-3">
+            <img class="card-img-top" src="<%= results[i].image_url %>" alt="Card image cap" style="padding: 15px;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= results[i].username %>
+                </h5>
+                <p class="card-text">
+                    <%= results[i].email %>
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+            <% } %>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

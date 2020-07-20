@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-light text-dark">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/profiles">Profiles</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= profile.user_id %>
+                </li>
+            </ol>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Profile Edit</h1>
+
+    </div>
+    <div class="container feed">
+        <form method="post" action="/update/<%=profile.user_id%>">
+            <div class="form-group">
+                <label for="exampleUsername">Username</label>
+                <input type="text" class="form-control" id="exampleUsername"  name="username" value="<%= profile.username %>" required >
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       name="email" value="<%= profile.email %>"required>
+
+            </div>
+            <div class="form-group">
+                <label for="imageURL">Image URL</label>
+                <input type="text" class="form-control" id="imageURL"  name="imageURL"
+                       value="<%= profile.image_url%>" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone number</label>
+                <input type="number" class="form-control" id="phone" min="0" max="9999999999" value="<%= profile.phone%>"  name="phone">
+            </div>
+            <div class="form-check">
+                <% const status = profile.set_child_friendly === 0 ? '': 'checked' %>
+                <input type="checkbox" class="form-check-input" id="parentalCheck1" name="parentalCheck" <%=status%>>
+                <label class="form-check-label" for="parentalCheck1">Activate Child Settings</label>
+            </div>
+            <div class="form-check">
+                <% const disabled = profile.disable_account === 0 ? '': 'checked' %>
+                <input type="checkbox" class="form-check-input" id="disabledCheck1" name="disabledCheck" <%=disabled%>>
+                <label class="form-check-label" for="disabledCheck1">Disable Account</label>
+            </div>
+            <div class="row" >
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary " style="margin-top: .5rem; margin-bottom: .5rem;">Update</button>
+                </div>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</main>
+<footer>
+    <% include ../partials/footer %>
+</footer>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!-- views/pages/photo.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-light text-dark">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/photos">Photos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= photo_id %>
+                </li>
+            </ol>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Photo</h1>
+
+        <p class="lead">There are a total of <strong><%=results.length%></strong>
+            comments.</p>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="float:none;margin:auto;">
+
+                <!--Card-->
+                <div class="card primary-color-dark" style="margin: 1rem;">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <img src="<%= image_url %>" class="card-img-top" alt="photo">
+                        <a href="#">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                        <div class="row">
+<!--                            <div class="col-lg-6 text-left"></div>-->
+
+<!--                            <div class="col-lg-4"></div>-->
+                            <div class="col-lg-2">
+                                <p>
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    <%= likes %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h5 class="card-title white-text text-center">Comments</h5>
+                            </div>
+                        </div>
+                        <% for(var i=0; i<results.length; i++) { %>
+                            <div class="row">
+                                <div class="col-lg-6 text-left">
+                                    <h5>
+                                        <a href="/profile/<%= results[i].user_id%>">
+                                            <small style="color: cadetblue">
+                                                <%= results[i].username%>
+                                            </small>
+                                        </a>
+
+
+
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 text-left">
+                                    <p style="font-size: large">
+                                        <em>
+                                            <%= results[i].comment%>
+                                        </em>
+                                    </p>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <p>
+                                    <small style="color: gray">
+                                        <%= (results[i].created_at.getMonth()+1) + '/' + results[i].created_at.getDate() + '/' +  results[i].created_at.getFullYear()%>
+                                    </small>
+                                    </p>
+                                    <button type="button" class="btn btn-outline-warning btn-sm pop-modal"
+                                            data-toggle="modal" data-target="#exampleModal" id="<%= results[i].comment_id%>"
+                                            onclick="reply_click(<%= results[i].comment_id%>)">
+                                        Report <i class="fa fa-flag" aria-hidden="true"></i>
+                                    </button>
+
+
+                                </div>
+
+                            </div>
+                        <% } %>
+                        <hr class="new1">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h5 class="card-title white-text text-center">Tags</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <% tags.forEach(el => {%>
+                            <div class="col-6">
+                                <p>
+                                    <em>
+                                        #<%= el.tag_name %>
+                                    </em>
+                                </p>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Report Commment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <form method="POST" action="/report">
+                        <p><strong>Please select an option for reporting</strong></p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="action" id="exampleRadios1" value="SEXUAL">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Sexual conduct and not appropriate.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="action" id="exampleRadios2" value="RUDE">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Unacceptable bullying behavior.
+                                </label>
+                            </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="action" id="exampleRadios3" value="OTHER">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Other reason, needs investigation.
+                            </label>
+                        </div>
+                            <button class="btn btn-outline-danger">Submit Action</button>
+                        </form>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+<% include ../partials/extensions %>
+<script>
+    $('#exmpleModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+    function reply_click(clicked_id) {
+
+        let val1 = $("#exampleRadios1").val();
+        let val2 = $("#exampleRadios2").val();
+        let val3 = $("#exampleRadios3").val();
+
+        $("#exampleRadios1").val(`${val1}-${clicked_id}`);
+        $("#exampleRadios2").val(`${val2}-${clicked_id}`);
+        $("#exampleRadios3").val(`${val3}-${clicked_id}`);
+    }
+
+</script>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

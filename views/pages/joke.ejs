@@ -1,0 +1,32 @@
+My Joke list
+<ul>
+    <% for(var i=0; i<results.length; i++) { %>
+        <li>
+            <%=results[i] %>
+        </li>
+    <% } %>
+</ul>
+
+<h1>
+    <%=obj.name %>
+</h1>
+<h1>
+    <%=obj.age %>
+</h1>
+<h1>
+    <%=obj.sex %>
+</h1>
+
+<ol>
+    <% for(var i=0; i<data.length; i++) {%>
+        <li>
+            Name: <%=data[i].name%>
+        </li>
+        <li>
+            age: <%=data[i].age%>
+        </li>
+        <li>
+            sex: <%=data[i].sex%>
+        </li>
+    <% } %>
+</ol>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-light text-dark">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                   Metrics
+                </li>
+            </ol>
+        </div>
+    </nav>
+</header>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<main>
+    <div class="jumbotron bg-light text-dark">
+        <h1 class="display-3">Metrics</h1>
+
+    </div>
+    <div class="container feed">
+        <div class="row">
+            <div class="col text-center">
+                <h4>Most influential users in the application</h4>
+            </div>
+        </div>
+        <canvas id="myChart" width="200" height="200"></canvas>
+        <span id="names" style="display: none">
+            <%= names %>
+        </span>
+        <span id="freq" style="display: none">
+            <%= freq %>
+        </span>
+    </div>
+    <div class="container feed">
+        <div class="row">
+            <div class="col text-center">
+                <h4>Most liked photos in the application</h4>
+            </div>
+        </div>
+        <canvas id="myChart2" width="200" height="200"></canvas>
+        <span id="most_like_names" style="display: none">
+            <%= most_like_names %>
+        </span>
+        <span id="most_like_count" style="display: none">
+            <%= most_like_count %>
+        </span>
+    </div>
+    <div class="container feed">
+        <div class="row">
+            <div class="col text-center">
+                <h4>Distribution of Hashtags</h4>
+            </div>
+        </div>
+        <canvas id="myChart3" width="200" height="200"></canvas>
+        <span id="list_tag_names" style="display: none">
+            <%= list_tag_names %>
+        </span>
+        <span id="list_tag_freq" style="display: none">
+            <%= list_tag_freq %>
+        </span>
+    </div>
+
+
+    <script>
+        function getData(id) {
+            const meta = document.getElementById(id).textContent;
+            return meta.trim().split(',');
+        }
+
+        const data = getData('freq').map(el => parseInt(el, 10));
+        const namesArray = getData('names');
+        let ctx = document.getElementById('myChart').getContext('2d');
+
+        const most_like_names = getData('most_like_names');
+        const most_like_counts = getData('most_like_count').map(el => parseInt(el, 10));
+        let ctx2 = document.getElementById('myChart2').getContext('2d');
+
+        const list_tag_names = getData('list_tag_names').map(el => `#${el}`);
+        const list_tag_freq = getData('list_tag_freq').map(el => parseInt(el, 10));
+        let ctx3 = document.getElementById('myChart3').getContext('2d');
+
+
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: namesArray,
+                datasets: [{
+                    label: 'followers',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Frequency'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Top Five most followed users'
+                }
+            }
+        });
+        let myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: most_like_names,
+                datasets: [{
+                    label: 'Likes',
+                    data: most_like_counts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Frequency'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Top Five most photos and their corresponding user'
+                }
+            }
+        });
+        const pieOptions = {
+            events: false,
+            title: {
+                display: true,
+                text: 'Distribution of Hashtags in the application'
+            },
+            animation: {
+                duration: 500,
+                easing: "easeOutQuart",
+                onComplete: function () {
+                    var ctx = this.chart.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset) {
+
+                        for (var i = 0; i < dataset.data.length; i++) {
+                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                start_angle = model.startAngle,
+                                end_angle = model.endAngle,
+                                mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                            var x = mid_radius * Math.cos(mid_angle);
+                            var y = mid_radius * Math.sin(mid_angle);
+
+                            ctx.fillStyle = '#444';
+
+                            var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                            ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                            // Display percent in another line, line break doesn't work for fillText
+                            ctx.fillText(percent, model.x + x, model.y + y + 15);
+                        }
+                    });
+                }
+            }
+        };
+        let myChart3 = new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: list_tag_names,
+                datasets: [{
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    data: list_tag_freq
+                }]
+            },
+            options: pieOptions
+        });
+
+
+    </script>
+</main>
+<footer>
+    <% include ../partials/footer %>
+</footer>
+</body>
+</html>
