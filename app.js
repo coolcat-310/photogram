@@ -35,7 +35,7 @@ app.get("/users", (req, res) => {
 
 //@route    GET /advertisers
 //@desc     Retrieves all advertisers  and their info
-//@access   Public
+//@access   Public - DONE
 app.get("/advertisers", (req, res) => {
     // GET ALL advertisers
     let query = new Promise((resolve, reject) => {
@@ -57,14 +57,19 @@ app.get("/advertisers", (req, res) => {
 
 //@route    GET /advertiser/:id
 //@desc     Retrieves an advertiser information including campaigns by id
-//@access   Public
+//@access   Public - DONE
 app.get("/advertiser/:id", (req, res) => {
+    const {id} = req.params.id;
+
+    if (!id){
+        return res.send('Missing ID');
+    }
 
     let query = new Promise((resolve, reject) => {
         // SELECT advertiser by id
         const q = `SELECT  * FROM advertisers
                     JOIN advertisers_info ON advertisers.id = advertisers_info.advertiser_id
-                    where advertiser_id= ${req.params.id}`;
+                    where advertiser_id= ${id}`;
 
         connection.query(q, (err, res) => {
             if (err) {
@@ -77,8 +82,8 @@ app.get("/advertiser/:id", (req, res) => {
         let query_two = new Promise((resolve, reject) => {
             // SELECT Campaigns by user_id
             const q2 = `SELECT * from campaigns
-                                join tags t on campaigns.id = t.campaign_id
-                                where advertiser_id=${req.params.id}`;
+                        join tags t on campaigns.id = t.campaign_id
+                        where advertiser_id=${id}`;
             connection.query(q2, (err, res) => {
                 if (err) {
                     return reject("db", `${err.message}`);
@@ -100,7 +105,7 @@ app.get("/advertiser/:id", (req, res) => {
 
 //@route    GET /likes
 //@desc     Retrieves photo info with likes
-//@access   Public
+//@access   Public - DONE
 app.get("/likes", (req, res) => {
     let query = new Promise((resolve, reject) => {
 
@@ -121,7 +126,7 @@ app.get("/likes", (req, res) => {
 
 //@route    GET /photos
 //@desc     Retrieves all photos
-//@access   Public
+//@access   Public - Done
 app.get("/photos", (req, res) => {
     let query = new Promise((resolve, reject) => {
         const q = "SELECT * from photos";
@@ -139,7 +144,7 @@ app.get("/photos", (req, res) => {
 
 //@route    GET /photo/:id
 //@desc     Retrieves a photo's information including likes, tags, and comments by id
-//@access   Public
+//@access   Public - DONE
 app.get("/photo/:id", (req, res) => {
     let query = new Promise((resolve, reject) => {
         // get photo info and comments
@@ -203,10 +208,10 @@ app.get("/photo/:id", (req, res) => {
 
 //@route    GET /profiles
 //@desc     Retrieves all profiles
-//@access   Public
+//@access   Public - DONE
 app.get("/profiles", (req, res) => {
     let query = new Promise((resolve, reject) => {
-        const q = "SELECT * from users join user_info ui on users.id = ui.user_id";
+        const q = 'SELECT * from users join user_info ui on users.id = ui.user_id';
         connection.query(q, (err, res) => {
             if (err) {
                 return reject("db", `${err.message}`);
@@ -222,7 +227,7 @@ app.get("/profiles", (req, res) => {
 
 //@route    GET /profile/:id
 //@desc     Retrieves a users's information including poc info and account settings
-//@access   Public
+//@access   Public - DONE
 app.get("/profile/:id", (req, res) => {
     let query = new Promise((resolve, reject) => {
         // GET USER BY ID
@@ -260,7 +265,7 @@ app.get("/profile/:id", (req, res) => {
 
 //@route    GET /edit/:id
 //@desc      Retrieves a users's information for editing purpose
-//@access   Public
+//@access   Public - DONE
 app.get("/edit/:id", (req, res) => {
     const {id} = req.params;
     let query = new Promise((resolve, reject) => {
@@ -300,7 +305,7 @@ app.get("/edit/:id", (req, res) => {
 
 //@route    POST /update/:id
 //@desc     Updates users's information
-//@access   Public
+//@access   Public - DONE
 app.post('/update/:id', (req, res) => {
     const {id} = req.params;
     // Deconstruct the form object which contains the updated values
@@ -350,7 +355,7 @@ app.post('/update/:id', (req, res) => {
 
 //@route    GET /tags
 //@desc     Retrieve all tags
-//@access   Public
+//@access   Public - DONE
 app.get("/tags", (req, res) => {
     let query = new Promise((resolve, reject) => {
         const q = "select tag_name, Count(*) as freq from photo_tags join tags t on photo_tags.tag_id = t.id join photos p on photo_tags.photo_id = p.id group by tag_name";
@@ -370,7 +375,7 @@ app.get("/tags", (req, res) => {
 
 //@route    GET /
 //@desc     Home page which is a feed for all usernames and their photos
-//@access   Public
+//@access   Public - DONE
 app.get("/", (req, res) => {
     let query = new Promise((resolve, reject) => {
         // Select all users and join with photo table
@@ -426,7 +431,6 @@ app.get("/", (req, res) => {
                         comments: commentArray
                     }
                 })
-
                 res.render("pages/home", {
                     result,
                     output,
@@ -439,10 +443,10 @@ app.get("/", (req, res) => {
 
 //@route    GET /campaigns
 //@desc     Retrieves all campaigns
-//@access   Public
+//@access   Public - DONE
 app.get("/campaigns", (req, res) => {
     let query = new Promise((resolve, reject) => {
-        const q = "SELECT * FROM campaigns";
+        const q = "SELECT * FROM campaigns JOIN advertisers a on campaigns.advertiser_id = a.id";
         connection.query(q, (err, res) => {
             if (err) {
                 return reject("db", `${err.message}`);
@@ -457,7 +461,7 @@ app.get("/campaigns", (req, res) => {
 
 //@route    GET /followers
 //@desc     Retrieves all users and total count of followers
-//@access   Public
+//@access   Public - DONE
 app.get('/followers', (req, res) => {
     let query = new Promise((resolve, reject) => {
         const q = "select username, followee_id, COUNT(*) as no_followers from follows " +
@@ -476,7 +480,7 @@ app.get('/followers', (req, res) => {
 
 //@route    GET /adjudicate/comment
 //@desc     Retrieves all comments that have been flag for adjudication
-//@access   Public
+//@access   Public -DONE
 app.get('/adjudicate/comment', (req, res) => {
     let query = new Promise((resolve, reject) => {
 
@@ -496,7 +500,7 @@ app.get('/adjudicate/comment', (req, res) => {
 
 //@route    GET /adjudicate/photo
 //@desc     Retrieves all photos that have been flag for adjudication
-//@access   Public
+//@access   Public -DONE
 app.get('/adjudicate/photo', (req, res) => {
     let query = new Promise((resolve, reject) => {
 
@@ -517,14 +521,14 @@ app.get('/adjudicate/photo', (req, res) => {
 
 //@route    GET /create/profile
 //@desc     Routes user to the create profile page
-//@access   Public
+//@access   Public - DONE
 app.get("/create/profile", (req, res) => {
     res.render('pages/new-profile');
 });
 
 //@route    POST /profile
 //@desc     Creates new user profile
-//@access   Public
+//@access   Public - DONE
 app.post('/profile', (req, res) => {
 
     const {username, email, imageURL, phone, password, parentalCheck} = req.body;
@@ -600,7 +604,7 @@ app.post('/profile', (req, res) => {
 
 //@route    GET /metrics
 //@desc     Retrieves data to create metrics like; most popular profile, most liked photo, and hashtag frequency
-//@access   Public
+//@access   Public -DONE
 app.get("/metrics", (req, res) => {
 
     let query = new Promise((resolve, reject) => {
@@ -663,7 +667,7 @@ app.get("/metrics", (req, res) => {
 
 //@route    POST /ad
 //@desc     After the adjudication verdict, the flag is deleted or both the flag and comment are deleted.
-//@access   Public
+//@access   Public - DONE
 app.post('/ad', (req, res) => {
     const {action} = req.body;
     const [route, ...rest] = action.split('-');
@@ -713,7 +717,7 @@ app.post('/ad', (req, res) => {
 
 //@route    POST /ad2
 //@desc     After the adjudication verdict, the flag is deleted or both the flag and photo are deleted.
-//@access   Public
+//@access   Public -DONE
 app.post('/ad2', (req, res) => {
     const {action} = req.body;
     const [route, ...rest] = action.split('-');
@@ -763,7 +767,7 @@ app.post('/ad2', (req, res) => {
 
 //@route    POST /post
 //@desc     Insert comment for adjudication
-//@access   Public
+//@access   Public - DONE
 app.post('/report', (req, res) => {
 
     const {action} = req.body;
@@ -793,7 +797,7 @@ app.post('/report', (req, res) => {
 
 //@route    POST /report-photo
 //@desc     Insert photo for adjudication
-//@access   Public
+//@access   Public - DONE
 app.post('/report-photo', (req, res) => {
     const {action} = req.body;
     const [reason_key, id] = action.split('-');
